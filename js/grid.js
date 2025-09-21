@@ -25,3 +25,24 @@ function selectCell(cell, row, col) {
     selectedCol = col;
     cell.style.backgroundColor = 'lightblue';
 }
+
+function getBoardFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    const boardStr = params.get("puzzle");  // still keep `puzzle=` in URL
+    if (!boardStr || boardStr.length !== 81) return null; // invalid or missing
+
+    return boardStr.split("");  // array of 81 characters
+}
+
+function prefillGrid(board) {
+    if (!board) return;
+
+    for (let i = 0; i < 81; i++) {
+        const cell = gridCells[i];  // gridCells is your array of <td> elements
+        const val = board[i];
+        if (val !== "0" && val !== ".") {
+            cell.textContent = val;
+            cell.classList.add("prefilled");  // style as uneditable
+        }
+    }
+}
