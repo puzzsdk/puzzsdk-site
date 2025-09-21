@@ -15,6 +15,9 @@ function generateGrid() {
 }
 
 function selectNumber(number) {
+    // Only act if a cell is selected
+    if (!selectedCell) return;
+    
     selectedNumber = number;
     selectedCell.textContent=selectedNumber;
 }
@@ -33,8 +36,29 @@ function clearCell() {
     }
 }
 
+function handleKey(event) {
+    // Only act if a cell is selected
+    if (!selectedCell) return;
+
+    const key = event.key; // get the pressed key
+
+    // If key is 1-9, put it in the selected cell
+    if (key >= '1' && key <= '9') {
+        selectedCell.textContent = key;
+        selectedNumber = parseInt(key); // optional, keep selectedNumber in sync
+    }
+
+    // Optional: clear cell with Backspace or Delete
+    if (key === 'Backspace' || key === 'Delete') {
+        selectedCell.textContent = '';
+        selectedNumber = null;
+    }
+}
+
 function checkSolution() {
     alert("Solution check coming soon!");
 }
 
 window.onload = generateGrid;
+document.addEventListener('keydown', handleKey);
+
