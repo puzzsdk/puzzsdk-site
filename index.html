@@ -1,32 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SudokuXpert</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku Puzzle</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<h1>SudokuXpert</h1>
-
-<!-- Sudoku Grid -->
-<div id="sudoku-grid"></div>
-
-<!-- Number Buttons -->
-<div id="controls">
-  <button class="btn" data-number="1">1</button>
-  <button class="btn" data-number="2">2</button>
-  <button class="btn" data-number="3">3</button>
-  <button class="btn" data-number="4">4</button>
-  <button class="btn" data-number="5">5</button>
-  <button class="btn" data-number="6">6</button>
-  <button class="btn" data-number="7">7</button>
-  <button class="btn" data-number="8">8</button>
-  <button class="btn" data-number="9">9</button>
-  <button class="btn" data-number="clear">Clear</button>
-</div>
-
-<script src="script.js"></script>
+    <h1>Sudoku Puzzle</h1>
+    <div id="sudoku-container">
+        <table id="sudoku-grid">
+            <!-- JS will generate the 9x9 cells -->
+        </table>
+    </div>
+    <div id="controls">
+        <div id="number-buttons">
+            <!-- Number buttons 1-9 -->
+            <button onclick="selectNumber(1)">1</button>
+            <button onclick="selectNumber(2)">2</button>
+            <button onclick="selectNumber(3)">3</button>
+            <button onclick="selectNumber(4)">4</button>
+            <button onclick="selectNumber(5)">5</button>
+            <button onclick="selectNumber(6)">6</button>
+            <button onclick="selectNumber(7)">7</button>
+            <button onclick="selectNumber(8)">8</button>
+            <button onclick="selectNumber(9)">9</button>
+        </div>
+        <button onclick="clearCell()">Clear</button>
+        <button onclick="checkSolution()">Check</button>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
