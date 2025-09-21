@@ -16,19 +16,27 @@
     <div id="controls">
         <div id="number-buttons">
             <!-- Number buttons 1-9 -->
-            <button onclick="selectNumber(1)">1</button>
-            <button onclick="selectNumber(2)">2</button>
-            <button onclick="selectNumber(3)">3</button>
-            <button onclick="selectNumber(4)">4</button>
-            <button onclick="selectNumber(5)">5</button>
-            <button onclick="selectNumber(6)">6</button>
-            <button onclick="selectNumber(7)">7</button>
-            <button onclick="selectNumber(8)">8</button>
-            <button onclick="selectNumber(9)">9</button>
+            <button class="number-btn" onclick="selectNumber(1)">1</button>
+            <button class="number-btn" onclick="selectNumber(2)">2</button>
+            <button class="number-btn" onclick="selectNumber(3)">3</button>
+            <button class="number-btn" onclick="selectNumber(4)">4</button>
+            <button class="number-btn" onclick="selectNumber(5)">5</button>
+            <button class="number-btn" onclick="selectNumber(6)">6</button>
+            <button class="number-btn" onclick="selectNumber(7)">7</button>
+            <button class="number-btn" onclick="selectNumber(8)">8</button>
+            <button class="number-btn" onclick="selectNumber(9)">9</button>
         </div>
-        <button onclick="clearCell()">Clear</button>
-        <button onclick="checkSolution()">Check</button>
+        <div id="action-buttons">
+            <button onclick="clearCell()">Clear</button>
+            <button onclick="checkSolution()">Check</button>
+        </div>
     </div>
-    <script src="script.js"></script>
+    <script src="js/globals.js"></script>  <!-- globals first -->
+    <script src="js/grid.js"></script>     <!-- grid & selectCell -->
+    <script src="js/keyboard.js"></script> <!-- keyboard input -->
+    <script src="js/buttons.js"></script>  <!-- button logic -->
+    <script>
+      window.onload = generateGrid;         // initialize grid
+    </script>
 </body>
 </html>
