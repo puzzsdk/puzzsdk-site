@@ -13,3 +13,29 @@ function clearCell() {
         selectedNumber = null;
     }
 }
+
+function generateButtons() {
+    const numberContainer = document.getElementById("number-buttons");
+    const actionContainer = document.getElementById("action-buttons");
+
+    // Number buttons 1–9
+    for (let i = 1; i <= 9; i++) {
+        const btn = document.createElement("button");
+        btn.className = "number-btn";
+        btn.textContent = i;
+        btn.onclick = () => selectNumber(i);
+        numberContainer.appendChild(btn);
+    }
+
+    // Action buttons
+    const clearBtn = document.createElement("button");
+    clearBtn.textContent = "Clear";
+    clearBtn.onclick = clearCell;
+    actionContainer.appendChild(clearBtn);
+
+    const checkBtn = document.createElement("button");
+    checkBtn.textContent = "Check";
+    checkBtn.onclick = checkSolution;
+    actionContainer.appendChild(checkBtn);
+}
+    
