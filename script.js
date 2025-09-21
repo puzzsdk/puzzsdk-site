@@ -45,10 +45,12 @@ function clearCell() {
         selectedCell.textContent = '';
     }
 }
-
+    
 function handleKey(event) {
-    // Only act if a cell is selected
-    if (!selectedCell) return;
+    if (selectedCell === null) return;
+
+    }
+
 
     const key = event.key; // get the pressed key
 
@@ -63,6 +65,18 @@ function handleKey(event) {
         selectedCell.textContent = '';
         selectedNumber = null;
     }
+    let newRow = selectedRow;
+    let newCol = selectedCol;
+
+    switch(key) {
+        case 'ArrowUp':    newRow = Math.max(0, selectedRow - 1); break;
+        case 'ArrowDown':  newRow = Math.min(8, selectedRow + 1); break;
+        case 'ArrowLeft':  newCol = Math.max(0, selectedCol - 1); break;
+        case 'ArrowRight': newCol = Math.min(8, selectedCol + 1); break;
+        default: return;
+    }
+    selectCell(gridCells[newRow][newCol], newRow, newCol);
+
 }
 
 function checkSolution() {
