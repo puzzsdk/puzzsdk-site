@@ -33,11 +33,13 @@ function generateButtons() {
 
     // Action buttons
     const clearBtn = document.createElement("button");
+    clearBtn.className = "number-btn";
     clearBtn.textContent = "Clear";
     clearBtn.onclick = clearCell;
     actionContainer.appendChild(clearBtn);
 
     const checkBtn = document.createElement("button");
+    checkBtn.className = "number-btn"; 
     checkBtn.textContent = "Check";
     checkBtn.onclick = checkSolution;
     actionContainer.appendChild(checkBtn);
