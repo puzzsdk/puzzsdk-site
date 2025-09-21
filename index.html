@@ -23,7 +23,10 @@
     <script src="js/keyboard.js"></script> <!-- keyboard input -->
     <script src="js/buttons.js"></script>  <!-- button logic -->
     <script>
-      window.onload = generateGrid;         // initialize grid
+        window.onload = function () {
+            generateGrid();
+            generateButtons();
+        };
     </script>
 </body>
 </html>
