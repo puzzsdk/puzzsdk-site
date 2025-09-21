@@ -24,8 +24,10 @@
     <script src="js/buttons.js"></script>  <!-- button logic -->
     <script>
         window.onload = function () {
-            generateGrid();
-            generateButtons();
+            generateGrid();             // creates 9x9 cells & fills gridCells
+            generateButtons();          // number buttons + action buttons
+            const board = getBoardFromURL();
+            prefillGrid(board);
         };
     </script>
 </body>
