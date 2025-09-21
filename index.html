@@ -4,95 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SudokuXpert</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 0;
-      padding: 0;
-      background-color: #f0f0f0;
-    }
-
-    h1 {
-      margin: 20px 0;
-    }
-
-    #sudoku-grid {
-      display: grid;
-      grid-template-columns: repeat(9, 1fr);
-      grid-gap: 2px;
-      width: 95vw; /* almost full width for mobile */
-      max-width: 600px;
-      margin-bottom: 15px;
-    }
-
-    .cell {
-      width: 100%;
-      aspect-ratio: 1; /* keeps square cells */
-      text-align: center;
-      line-height: 1;
-      font-size: 1.5em;
-      border: 1px solid #999;
-      background-color: white;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    /* thicker borders for 3x3 blocks */
-    .cell:nth-child(3n) {
-      border-right: 2px solid black;
-    }
-    .cell:nth-child(27n + 1),
-    .cell:nth-child(27n + 2),
-    .cell:nth-child(27n + 3),
-    .cell:nth-child(27n + 10),
-    .cell:nth-child(27n + 11),
-    .cell:nth-child(27n + 12),
-    .cell:nth-child(27n + 19),
-    .cell:nth-child(27n + 20),
-    .cell:nth-child(27n + 21) {
-      border-left: 2px solid black;
-    }
-    .cell:nth-child(n + 19):nth-child(-n + 27),
-    .cell:nth-child(n + 46):nth-child(-n + 54),
-    .cell:nth-child(n + 73):nth-child(-n + 81) {
-      border-bottom: 2px solid black;
-    }
-
-    #controls {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 5px;
-      margin-bottom: 20px;
-      max-width: 600px;
-      width: 95vw;
-    }
-
-    .btn {
-      flex: 1 0 30px;
-      height: 40px;
-      background-color: #2196F3;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 1em;
-      cursor: pointer;
-    }
-
-    .btn:hover {
-      background-color: #1976D2;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <h1>SudokuXpert</h1>
 
+<!-- Sudoku Grid -->
 <div id="sudoku-grid"></div>
 
+<!-- Number Buttons -->
 <div id="controls">
   <button class="btn" data-number="1">1</button>
   <button class="btn" data-number="2">2</button>
