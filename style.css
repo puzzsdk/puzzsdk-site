@@ -1,106 +1,37 @@
-/* General body styling */
 body {
-  font-family: Arial, sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0;
-  padding: 0;
-  background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
 }
 
-/* Header */
-h1 {
-  margin: 20px 0;
-  text-align: center;
+#sudoku-container {
+    display: inline-block;
+    margin-bottom: 20px;
 }
 
-/* Sudoku grid container */
 #sudoku-grid {
-  display: grid;
-  grid-template-columns: repeat(9, 1fr);
-  width: 95vw;       /* fills most of the screen width */
-  max-width: 600px;  /* limits width on larger screens */
-  margin-bottom: 15px;
-  gap: 2px;
+    border-collapse: collapse;
 }
 
-/* Individual cells */
-.cell {
-  width: 100%;
-  aspect-ratio: 1;         /* ensures square cells */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-size: 1.5em;
-  border: 1px solid #999;
-  background-color: white;
-  cursor: pointer;
-  user-select: none;
+#sudoku-grid td {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #000;
+    text-align: center;
+    font-size: 20px;
+    cursor: pointer;
 }
 
-/* Highlight selected cell */
-.cell.selected {
-  background-color: #ffeaa7;
+#sudoku-grid td:nth-child(3n) {
+    border-right: 2px solid #000;
 }
 
-/* Thicker borders for 3x3 blocks */
-.cell:nth-child(3n) {
-  border-right: 2px solid black;
-}
-.cell:nth-child(n+19):nth-child(-n+27),
-.cell:nth-child(n+46):nth-child(-n+54),
-.cell:nth-child(n+73):nth-child(-n+81) {
-  border-bottom: 2px solid black;
-}
-.cell:nth-child(1),
-.cell:nth-child(2),
-.cell:nth-child(3),
-.cell:nth-child(10),
-.cell:nth-child(11),
-.cell:nth-child(12),
-.cell:nth-child(19),
-.cell:nth-child(20),
-.cell:nth-child(21) {
-  border-left: 2px solid black;
+#sudoku-grid tr:nth-child(3n) td {
+    border-bottom: 2px solid #000;
 }
 
-/* Controls container */
-#controls {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 5px;
-  margin-bottom: 20px;
-  max-width: 600px;
-  width: 95vw;
-}
-
-/* Buttons */
-.btn {
-  flex: 1 0 30px;
-  height: 40px;
-  background-color: #2196F3;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 1em;
-  cursor: pointer;
-}
-
-.btn:hover {
-  background-color: #1976D2;
-}
-
-/* Responsive adjustments for very small screens */
-@media (max-width: 350px) {
-  .cell {
-    font-size: 1.2em;
-  }
-
-  .btn {
-    height: 35px;
-    font-size: 0.9em;
-  }
+#controls button {
+    font-size: 16px;
+    margin: 2px;
+    padding: 5px 10px;
 }
