@@ -16,7 +16,7 @@ function generateGrid() {
 
 function selectNumber(number) {
     selectedNumber = number;
-    selectedCell.textContent=number;
+    selectedCell.textContent=selectedNumber;
 }
 
 function selectCell(cell) {
