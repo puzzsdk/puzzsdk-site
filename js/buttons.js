@@ -14,6 +14,10 @@ function clearCell() {
     }
 }
 
+function checkSolution() {
+    alert("Solution check coming soon!");
+}
+
 function generateButtons() {
     const numberContainer = document.getElementById("number-buttons");
     const actionContainer = document.getElementById("action-buttons");
