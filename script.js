@@ -19,10 +19,11 @@ function selectNumber(number) {
 }
 
 function selectCell(cell) {
-    selectedCell = cell;
-    if (selectedNumber) {
-        cell.textContent = selectedNumber;
+    if (selectedCell && selectedCell !== cell) {
+        selectedCell.style.backgroundColor = ''; // reset old cell
     }
+    selectedCell = cell;
+    cell.style.backgroundColor = 'lightblue'; // or any color you like
 }
 
 function clearCell() {
