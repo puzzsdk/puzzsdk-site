@@ -12,7 +12,7 @@ function generateGrid() {
     let rowCells = [];
     for (let col = 0; col < 9; col++) {
         const td = document.createElement('td');
-        td.addEventListener('click', () => selectCell(td));
+        td.addEventListener('click', () => selectCell(td, row, col));
         tr.appendChild(td);
         rowCells.push(td);  // store in array
     }
