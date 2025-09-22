@@ -28,7 +28,7 @@ function selectCell(cell, row, col) {
 
 function getBoardFromURL() {
     const params = new URLSearchParams(window.location.search);
-    const boardStr = params.get("puzzle");  // still keep `puzzle=` in URL
+    const boardStr = params.get("board");  // still keep `puzzle=` in URL
     if (!boardStr || boardStr.length !== 81) return null; // invalid or missing
 
     return boardStr.split("");  // array of 81 characters
