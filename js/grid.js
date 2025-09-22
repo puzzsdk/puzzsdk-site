@@ -38,11 +38,15 @@ function prefillGrid(board) {
     if (!board) return;
 
     for (let i = 0; i < 81; i++) {
-        const cell = gridCells[i];  // gridCells is your array of <td> elements
+        const row = Math.floor(i / 9);
+        const col = i % 9;
+        const cell = gridCells[row][col];
         const val = board[i];
+
         if (val !== "0" && val !== ".") {
             cell.textContent = val;
-            cell.classList.add("prefilled");  // style as uneditable
+            cell.classList.add("prefilled");  // optional style
+            cell.style.pointerEvents = "none"; // prevent clicking
         }
     }
 }
