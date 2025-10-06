@@ -1,24 +1,19 @@
-// Handle keyboard input
 function handleKey(event) {
     if (!selectedCell) return;
 
     const key = event.key;
-
-    // Number input
     if (key >= '1' && key <= '9') {
-        selectedCell.textContent = key;
-        selectedNumber = parseInt(key);
+        const num = parseInt(key);
+        // Delegate to the shared selectNumber handler so keyboard and buttons behave identically
+        selectNumber(num);
         return;
     }
-
-    // Clear
     if (key === 'Backspace' || key === 'Delete') {
-        selectedCell.textContent = '';
-        selectedNumber = null;
+        // Use the centralized clear logic so it clears value first, then notes
+        clearCell();
         return;
     }
 
-    // Arrow navigation
     let newRow = selectedRow;
     let newCol = selectedCol;
 
@@ -33,5 +28,4 @@ function handleKey(event) {
     selectCell(gridCells[newRow][newCol], newRow, newCol);
 }
 
-// Attach listener
 document.addEventListener('keydown', handleKey);

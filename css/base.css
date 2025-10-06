@@ -1,0 +1,6 @@
+/* Base global styles that are not reset */
+#sudoku-container,
+#controls {
+  width: 100%;
+  max-width: 600px;
+}

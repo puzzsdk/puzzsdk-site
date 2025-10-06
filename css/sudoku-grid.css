@@ -1,0 +1,100 @@
+#sudoku-container {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* =====================
+   Sudoku Grid
+===================== */
+#sudoku-grid {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: repeat(9, 1fr);
+    width: 100%;
+    max-width: 800px;
+    aspect-ratio: 1 / 1;
+    border: 2px solid #000; /* outer border */
+    position: relative;
+}
+
+.cell {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(16px, 2vw, 24px);
+    cursor: pointer;
+    user-select: none;
+    aspect-ratio: 1 / 1;
+    transition: background-color 0.2s;
+    background-color: #fff;
+}
+
+
+/* Per-cell borders (easier to reason about than overlapping pseudo-elements) */
+.cell {
+    /* ...existing code... */
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+/* Thick 3x3 box borders (override the thin borders where needed) */
+.cell.thick-top    { border-top: 2px solid #000; }
+.cell.thick-left   { border-left: 2px solid #000; }
+.cell.thick-bottom { border-bottom: 2px solid #000; }
+.cell.thick-right  { border-right: 2px solid #000; }
+
+/* Highlight selected cell */
+.cell.selected::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border: 3px solid lightblue;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
+/* Prefilled cells */
+.cell.prefilled {
+    font-weight: bold;
+    background-color: #eee;
+    pointer-events: none;
+}
+
+/* Hover for editable cells */
+.cell:hover:not(.prefilled) {
+    background-color: #f0f8ff;
+}
+
+/* Corner notes: small numbers displayed in the top-right of the cell */
+.corner-notes {
+    position: absolute;
+    top: 4px;
+    right: 6px;
+    font-size: 0.6em;
+    color: #333;
+    line-height: 1;
+    pointer-events: none;
+    opacity: 0.9;
+    white-space: nowrap;
+}
+
+/* Full 3x3 pencilmarks inside each cell */
+.full-notes {
+    position: absolute;
+    inset: 6px; /* small padding inside the cell */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    align-items: center;
+    justify-items: center;
+    pointer-events: none;
+}
+.full-notes .full-note {
+    font-size: 0.55em;
+    color: #666;
+    visibility: hidden; /* hidden by default, show if present */
+}

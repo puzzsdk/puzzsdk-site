@@ -1,0 +1,61 @@
+/* Navbar styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: #333;
+  color: #fff;
+  /* make navbar a positioned element so absolutely-positioned children are anchored to it */
+  position: relative;
+  z-index: 1000; /* sit above the grid */
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  /* ensure hamburger and its transformed X sit above the mobile menu */
+  position: relative;
+  z-index: 1200;
+/*  padding: 6px; /* larger hit target on mobile */
+}
+
+.hamburger span {
+  height: 3px;
+  width: 25px;
+  background: #fff;
+  margin: 4px 0;
+  border-radius: 3px;
+}
+
+/* Hamburger active state - add .open class on the .hamburger element to animate */
+.hamburger.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+/* No transition: switch to X instantly */
+.hamburger span {
+  transition: none;
+}

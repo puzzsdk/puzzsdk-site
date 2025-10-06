@@ -1,0 +1,41 @@
+@media (min-width: 769px) {
+    #sudoku-container {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    #controls {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    #number-buttons {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    #action-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .number-btn {
+        width: 50px;
+        height: 50px;
+    }
+
+    .action-btn {
+        padding: 12px 24px;
+        font-size: 20px;
+        min-width: 100px;
+    }
+
+    #sudoku-grid {
+        max-width: 800px;
+    }
+}

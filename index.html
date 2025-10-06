@@ -4,31 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Sudoku Puzzle</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/sudoku-grid.css">
+    <link rel="stylesheet" href="css/controls.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/desktop.css">
 </head>
 <body>
-    <h1>Sudoku Puzzle</h1>
+    <!-- Navigation Menu -->
+    <nav class="navbar">
+        <div class="logo">Sudoku</div>
+        <ul class="nav-links">
+            <li><a href="#" onclick="newGame()">New Game</a></li>
+            <li><a href="#" onclick="checkBoard()">Check</a></li>
+            <li><a href="#" onclick="solveBoard()">Solve</a></li>
+            <li><a href="#">About</a></li>
+        </ul>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
     <div id="sudoku-container">
-        <table id="sudoku-grid">
-            <!-- JS will generate the 9x9 cells -->
-        </table>
+        <div id="sudoku-grid">
+            <!-- JS will generate 9x9 div cells -->
+        </div>
+        <div id="controls">
+            <div id="number-buttons"></div>
+            <div id="action-buttons"></div>
+        </div>
     </div>
-    <div id="controls">
-        <div id="number-buttons"></div>
-        <div id="action-buttons"></div>
-    </div>
-    
-    <script src="js/globals.js"></script>  <!-- globals first -->
-    <script src="js/grid.js"></script>     <!-- grid & selectCell -->
-    <script src="js/keyboard.js"></script> <!-- keyboard input -->
-    <script src="js/buttons.js"></script>  <!-- button logic -->
-    <script>
-        window.onload = function () {
-            generateGrid();             // creates 9x9 cells & fills gridCells
-            generateButtons();          // number buttons + action buttons
-            const board = getBoardFromURL();
-            prefillGrid(board);
-        };
-    </script>
+
+    <script src="js/globals.js"></script>
+    <script src="js/grid.js"></script>
+    <script src="js/keyboard.js"></script>
+    <script src="js/buttons.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

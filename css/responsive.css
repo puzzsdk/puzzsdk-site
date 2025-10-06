@@ -1,0 +1,32 @@
+/* Mobile-first responsive styles */
+@media (max-width: 768px) {
+  /* Mobile dropdown: keep layout as flex but collapse with max-height for smooth transitions */
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    background: #444;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 220px;
+    padding: 0 15px; /* padding applied when opened */
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: max-height 260ms ease, opacity 200ms ease, padding 200ms ease;
+    z-index: 1100; /* ensure dropdown overlays the grid */
+    box-shadow: 0 6px 12px rgba(0,0,0,0.18);
+  }
+
+  .nav-links.active {
+    max-height: 400px; /* large enough to show menu items */
+    opacity: 1;
+    pointer-events: auto;
+    padding: 15px;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}
