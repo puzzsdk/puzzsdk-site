@@ -1,7 +1,20 @@
 function handleKey(event) {
-    if (!selectedCell) return;
+    // don't intercept when typing into form fields
+    const tag = (event.target && event.target.tagName) || '';
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || event.ctrlKey || event.metaKey || event.altKey) return;
 
+    // allow mode toggle even if no cell selected
     const key = event.key;
+
+    // Toggle input mode cycle when pressing Spacebar
+    if (event.code === 'Space') {
+        const modes = ['value', 'corner', 'center'];
+        const idx = modes.indexOf(typeof inputMode !== 'undefined' ? inputMode : 'value');
+        const next = modes[(idx + 1) % modes.length];
+        if (typeof setInputMode === 'function') setInputMode(next);
+        event.preventDefault();
+        return;
+    }
     if (key >= '1' && key <= '9') {
         const num = parseInt(key);
         // Delegate to the shared selectNumber handler so keyboard and buttons behave identically

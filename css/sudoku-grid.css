@@ -69,21 +69,8 @@
     background-color: #f0f8ff;
 }
 
-/* Corner notes: small numbers displayed in the top-right of the cell */
+/* Corner notes: now implemented as the 3x3 pencilmarks grid inside each cell */
 .corner-notes {
-    position: absolute;
-    top: 4px;
-    right: 6px;
-    font-size: 0.6em;
-    color: #333;
-    line-height: 1;
-    pointer-events: none;
-    opacity: 0.9;
-    white-space: nowrap;
-}
-
-/* Full 3x3 pencilmarks inside each cell */
-.full-notes {
     position: absolute;
     inset: 6px; /* small padding inside the cell */
     display: grid;
@@ -92,9 +79,31 @@
     align-items: center;
     justify-items: center;
     pointer-events: none;
+    z-index: 1;
 }
-.full-notes .full-note {
+.corner-notes .corner-note {
     font-size: 0.55em;
     color: #666;
-    visibility: hidden; /* hidden by default, show if present */
+    visibility: hidden; /* hidden by default, shown when present */
+}
+
+/* Ensure main value sits above corner notes */
+.cell .value {
+    position: relative;
+    z-index: 2;
+}
+
+/* Center notes: single-line numbers centered in the middle of the cell */
+.center-notes {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.65em;
+    color: #333;
+    line-height: 1;
+    pointer-events: none;
+    opacity: 0.95;
+    text-align: center;
+    z-index: 1;
 }

@@ -8,15 +8,18 @@ let selectedNumber = null;  // number selected via button or keyboard
 // When true, number inputs toggle corner notes instead of writing the main value
 let cornerNoteMode = false;
 
-// Full pencilmark notes (3x3 style) data structure: 9x9 array of Sets
-let cellFullNotes = Array.from({ length: 9 }, () =>
+// Input mode: 'value' | 'corner' | 'center' - default to value
+let inputMode = 'value';
+
+// Center (3x3) pencilmark notes data structure: 9x9 array of Sets
+let cellCenterNotes = Array.from({ length: 9 }, () =>
 	Array.from({ length: 9 }, () => new Set())
 );
 
-// Helper functions for full notes
-function toggleFullNote(row, col, num) {
+// Helper functions for center notes
+function toggleCenterNote(row, col, num) {
 	if (row == null || col == null) return;
-	const s = cellFullNotes[row][col];
+	const s = cellCenterNotes[row][col];
 	if (s.has(num)) {
 		s.delete(num);
 		return false;
@@ -26,19 +29,19 @@ function toggleFullNote(row, col, num) {
 	}
 }
 
-function addFullNote(row, col, num) {
+function addCenterNote(row, col, num) {
 	if (row == null || col == null) return;
-	cellFullNotes[row][col].add(num);
+	cellCenterNotes[row][col].add(num);
 }
 
-function removeFullNote(row, col, num) {
+function removeCenterNote(row, col, num) {
 	if (row == null || col == null) return;
-	cellFullNotes[row][col].delete(num);
+	cellCenterNotes[row][col].delete(num);
 }
 
-function getFullNotes(row, col) {
+function getCenterNotes(row, col) {
 	if (row == null || col == null) return new Set();
-	return new Set(cellFullNotes[row][col]);
+	return new Set(cellCenterNotes[row][col]);
 }
 
 // Corner notes data structure: 9x9 array where each entry is a Set of numbers (1..9)

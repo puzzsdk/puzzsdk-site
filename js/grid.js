@@ -27,23 +27,23 @@ function generateGrid() {
             valueSpan.className = 'value';
             cell.appendChild(valueSpan);
 
-            // Corner notes container (small top-right overlay)
+            // Corner notes container (3x3 pencilmarks inside the cell)
             const cornerNotesEl = document.createElement('div');
             cornerNotesEl.className = 'corner-notes';
-            cell.appendChild(cornerNotesEl);
-
-            // Full 3x3 pencilmarks container
-            const fullNotes = document.createElement('div');
-            fullNotes.className = 'full-notes';
-            // create 9 slots for digits 1..9
+            // create 9 slots for digits 1..9 (3x3 layout)
             for (let n = 1; n <= 9; n++) {
                 const span = document.createElement('span');
-                span.className = 'full-note';
+                span.className = 'corner-note';
                 span.dataset.num = n;
                 span.textContent = n;
-                fullNotes.appendChild(span);
+                cornerNotesEl.appendChild(span);
             }
-            cell.appendChild(fullNotes);
+            cell.appendChild(cornerNotesEl);
+
+            // Center notes container (single-line numbers centered in the cell)
+            const centerNotes = document.createElement('div');
+            centerNotes.className = 'center-notes';
+            cell.appendChild(centerNotes);
 
             // Append to grid
             grid.appendChild(cell);
@@ -90,40 +90,34 @@ function prefillGrid(board) {
 }
 
 // Render corner notes for a single cell (row, col)
+
+// Render corner (3x3) notes for a single cell (row, col)
 function renderCornerNotes(row, col) {
     const cell = gridCells[row][col];
-    const notesEl = cell.querySelector('.corner-notes');
-    if (!notesEl) return;
-    const notes = [...getCornerNotes(row, col)].sort((a, b) => a - b);
-    notesEl.textContent = notes.join('');
-}
-
-function renderAllCornerNotes() {
-    for (let r = 0; r < 9; r++) {
-        for (let c = 0; c < 9; c++) {
-            renderCornerNotes(r, c);
-        }
-    }
-}
-
-// Render full 3x3 pencilmarks for a single cell
-function renderFullNotes(row, col) {
-    const cell = gridCells[row][col];
-    const fullEl = cell.querySelector('.full-notes');
-    if (!fullEl) return;
-    const notes = new Set(getFullNotes(row, col));
-    const spans = fullEl.querySelectorAll('.full-note');
+    const cornerEl = cell.querySelector('.corner-notes');
+    if (!cornerEl) return;
+    const notes = new Set(getCornerNotes(row, col));
+    const spans = cornerEl.querySelectorAll('.corner-note');
     spans.forEach(span => {
         const n = parseInt(span.dataset.num, 10);
         span.style.visibility = notes.has(n) ? 'visible' : 'hidden';
     });
 }
 
+// Render center (single-line) notes for a single cell
+function renderCenterNotes(row, col) {
+    const cell = gridCells[row][col];
+    const centerEl = cell.querySelector('.center-notes');
+    if (!centerEl) return;
+    const notes = [...getCenterNotes(row, col)].sort((a, b) => a - b);
+    centerEl.textContent = notes.join('');
+}
+
 function renderAllNotes() {
     for (let r = 0; r < 9; r++) {
         for (let c = 0; c < 9; c++) {
             renderCornerNotes(r, c);
-            renderFullNotes(r, c);
+            renderCenterNotes(r, c);
         }
     }
 }

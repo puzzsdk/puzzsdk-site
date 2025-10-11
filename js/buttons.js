@@ -2,10 +2,17 @@ function selectNumber(number) {
     selectedNumber = number;
     if (!selectedCell) return;
 
-    if (cornerNoteMode) {
-        // toggle corner note for selected cell
-        const added = toggleCornerNote(selectedRow, selectedCol, number);
+    // Decide behavior based on inputMode: 'value' | 'corner' | 'center'
+    // NOTE: 'corner' mode toggles the 3x3 corner-style pencilmarks
+    if (inputMode === 'corner') {
+        toggleCornerNote(selectedRow, selectedCol, number);
         renderCornerNotes(selectedRow, selectedCol);
+        return;
+    }
+    // 'center' mode toggles the small centered inline notes
+    if (inputMode === 'center') {
+        toggleCenterNote(selectedRow, selectedCol, number);
+        renderCenterNotes(selectedRow, selectedCol);
         return;
     }
 
@@ -19,23 +26,60 @@ function selectNumber(number) {
 
 function clearCell() {
     if (!selectedCell) return;
-
     const valueSpan = selectedCell.querySelector('.value');
     const hasValue = valueSpan && valueSpan.textContent.trim() !== '';
-    const notes = getCornerNotes(selectedRow, selectedCol);
 
+    // Helper to clear all center notes
+    function clearAllCenterNotes() {
+        const centerNotes = getCenterNotes(selectedRow, selectedCol);
+        if (centerNotes.size > 0) {
+            centerNotes.forEach(n => removeCenterNote(selectedRow, selectedCol, n));
+            renderCenterNotes(selectedRow, selectedCol);
+            return true;
+        }
+        return false;
+    }
+
+    // Helper to clear all corner notes
+    function clearAllCornerNotes() {
+        const cornerNotes = getCornerNotes(selectedRow, selectedCol);
+        if (cornerNotes.size > 0) {
+            cornerNotes.forEach(n => removeCornerNote(selectedRow, selectedCol, n));
+            renderCornerNotes(selectedRow, selectedCol);
+            return true;
+        }
+        return false;
+    }
+
+    // Step 1: if there is a main value, clear it and stop (first step always clears value)
     if (hasValue) {
-        // Clear main value first, reveal notes underneath
         valueSpan.textContent = '';
         selectedNumber = null;
-        // Do not clear notes here; they remain and will be visible
         return;
     }
 
-    // If there's no main value but there are corner notes, clear them
-    if (notes.size > 0) {
-        notes.forEach(n => removeCornerNote(selectedRow, selectedCol, n));
-        renderCornerNotes(selectedRow, selectedCol);
+    // No main value: follow mode-specific sequence
+    if (inputMode === 'corner') {
+        // 2: corner notes -> 3: center notes
+        if (clearAllCornerNotes()) return;
+        if (clearAllCenterNotes()) return;
+        return;
+    }
+
+    if (inputMode === 'center') {
+        // 2: center notes -> 3: corner notes
+        if (clearAllCenterNotes()) return;
+        if (clearAllCornerNotes()) return;
+        return;
+    }
+
+    // value mode (or unknown): clear all notes after value is gone
+    if (inputMode === 'value' || !inputMode) {
+        // try clear value already handled; now clear both note types (corner then center)
+        let did = false;
+        if (clearAllCornerNotes()) did = true;
+        if (clearAllCenterNotes()) did = true;
+        // nothing to do if did is false
         return;
     }
 }
@@ -59,14 +103,8 @@ function generateButtons() {
     const clearBtn = document.createElement("button");
     clearBtn.className = "action-btn";
     clearBtn.textContent = "Clear";
+    // Always use the centralized clear logic which cycles: value -> reveal notes -> clear notes
     clearBtn.onclick = () => {
-        if (cornerNoteMode && selectedCell) {
-            // clear corner notes for selected cell
-            const notes = getCornerNotes(selectedRow, selectedCol);
-            notes.forEach(n => removeCornerNote(selectedRow, selectedCol, n));
-            renderCornerNotes(selectedRow, selectedCol);
-            return;
-        }
         clearCell();
     };
     actionContainer.appendChild(clearBtn);
@@ -77,13 +115,52 @@ function generateButtons() {
     checkBtn.onclick = checkSolution;
     actionContainer.appendChild(checkBtn);
 
-    // Corner note mode toggle
-    const cornerToggle = document.createElement('button');
-    cornerToggle.className = 'action-btn';
-    cornerToggle.textContent = 'Corner Notes: Off';
-    cornerToggle.onclick = () => {
-        cornerNoteMode = !cornerNoteMode;
-        cornerToggle.textContent = `Corner Notes: ${cornerNoteMode ? 'On' : 'Off'}`;
-    };
-    actionContainer.appendChild(cornerToggle);
+    // Input mode selector (value / corner / center) - visually like mini-cells
+    const modeGroup = document.createElement('div');
+    modeGroup.id = 'note-mode-group';
+    modeGroup.style.display = 'flex';
+    modeGroup.style.gap = '8px';
+
+    const modes = [
+        { key: 'value', label: '5', cls: 'mode-value' },
+            { key: 'corner', label: '3x3', cls: 'mode-corner' }, // Original label retained for context
+        { key: 'center', label: '123', cls: 'mode-center' }
+    ];
+
+    modes.forEach(m => {
+        const b = document.createElement('button');
+        b.className = `mode-btn ${m.cls}`;
+        b.dataset.mode = m.key;
+        b.setAttribute('aria-pressed', inputMode === m.key);
+        b.title = `Input mode: ${m.key}`;
+            // For corner (3x3) mode render a miniature 3x3 grid so it looks like a cell
+            if (m.key === 'corner') {
+                // create 3x3 small cells showing numbers 1..9
+                let mini = '<div class="mini-grid">';
+                for (let n = 1; n <= 9; n++) {
+                    mini += `<div class="mini-cell">${n}</div>`;
+                }
+                mini += '</div>';
+                b.innerHTML = mini;
+            } else {
+                b.innerHTML = `<span class="mode-label">${m.label}</span>`;
+            }
+        b.onclick = () => setInputMode(m.key);
+        modeGroup.appendChild(b);
+    });
+
+    actionContainer.appendChild(modeGroup);
+    // ensure initial mode button reflects current inputMode
+    setInputMode(inputMode);
+}
+
+function setInputMode(mode) {
+    inputMode = mode;
+    // update aria-pressed and active class
+    const buttons = document.querySelectorAll('#note-mode-group .mode-btn');
+    buttons.forEach(btn => {
+        const isActive = btn.dataset.mode === mode;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-pressed', isActive);
+    });
 }

@@ -23,6 +23,42 @@
     transition: background-color 0.2s;
 }
 
+/* Mode selector buttons (mini cell look) */
+.mode-btn {
+    width: 48px;
+    aspect-ratio: 1/1;
+    display: grid;
+    place-items: center;
+    border: 1px solid #999;
+    background: #fff;
+    padding: 4px;
+    font-size: 12px;
+}
+.mode-btn.active {
+    background: #2563eb; /* blue */
+    color: #fff;
+    border-color: #1e40af;
+}
+.mode-value .mode-label { font-size: 18px; font-weight: 700; }
+.mode-corner .mode-label { font-size: 10px; }
+.mode-center .mode-label { font-size: 11px; }
+
+/* Mini 3x3 grid inside the corner mode button */
+.mini-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    width: 100%;
+    height: 100%;
+    gap: 0px;
+    align-items: center;
+    justify-items: center;
+}
+.mini-grid .mini-cell {
+    font-size: 9px;
+    color: inherit;
+}
+
 .number-btn {
     width: 40px;
     height: 40px;

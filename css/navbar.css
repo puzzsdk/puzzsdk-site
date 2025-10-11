@@ -55,7 +55,6 @@
 .hamburger.open span:nth-child(3) {
   transform: translateY(-7px) rotate(-45deg);
 }
-/* No transition: switch to X instantly */
 .hamburger span {
-  transition: none;
+  transition: transform 200ms ease, opacity 160ms ease;
 }
