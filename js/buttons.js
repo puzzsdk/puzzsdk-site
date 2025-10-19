@@ -159,6 +159,7 @@ function generateButtons() {
     setInputMode(inputMode);
 
     const lockBtn = document.createElement("button");
+    lockBtn.id = 'lock-toggle-btn';
     lockBtn.className = "action-btn";
     lockBtn.textContent = lockMode ? "🔒 Locked" : "🔓 Unlocked";
     lockBtn.onclick = () => {

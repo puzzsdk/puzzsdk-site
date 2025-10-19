@@ -57,6 +57,10 @@ function generateGrid() {
 }
 
 function selectCell(cell, row, col) {
+    // If lockMode prevents selecting prefilled cells, ignore
+    if (lockMode && cell.classList.contains('prefilled')) {
+        return;
+    }
     if (selectedCell && selectedCell !== cell) {
         selectedCell.classList.remove('selected');
     }
@@ -86,7 +90,7 @@ function prefillGrid(board) {
             // update model for prefilled cell
             if (typeof setGridValue === 'function') setGridValue(row, col, val);
             cell.classList.add("prefilled");
-            cell.style.pointerEvents = "none";
+            cell.style.pointerEvents = lockMode ? "none" : "auto";
         }
     }
 }
