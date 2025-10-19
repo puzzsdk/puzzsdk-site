@@ -19,8 +19,11 @@ function selectNumber(number) {
     const valueSpan = selectedCell.querySelector('.value');
     if (valueSpan) {
         valueSpan.textContent = number;
+        // update model
+        setGridValue(selectedRow, selectedCol, number);
     } else {
         selectedCell.textContent = number;
+        setGridValue(selectedRow, selectedCol, number);
     }
 }
 
@@ -55,6 +58,8 @@ function clearCell() {
     if (hasValue) {
         valueSpan.textContent = '';
         selectedNumber = null;
+        // update model
+        setGridValue(selectedRow, selectedCol, null);
         return;
     }
 
@@ -152,6 +157,16 @@ function generateButtons() {
     actionContainer.appendChild(modeGroup);
     // ensure initial mode button reflects current inputMode
     setInputMode(inputMode);
+
+    const lockBtn = document.createElement("button");
+    lockBtn.className = "action-btn";
+    lockBtn.textContent = lockMode ? "🔒 Locked" : "🔓 Unlocked";
+    lockBtn.onclick = () => {
+        lockMode = !lockMode;
+        lockBtn.textContent = lockMode ? "🔒 Locked" : "🔓 Unlocked";
+        handleLockModeChange();
+    };
+    actionContainer.appendChild(lockBtn);
 }
 
 function setInputMode(mode) {

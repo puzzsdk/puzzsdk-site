@@ -22,15 +22,19 @@
 
 .cell {
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    /* use a 4x4 sub-grid inside each cell so we can position note regions precisely */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    place-items: center;
     font-size: clamp(16px, 2vw, 24px);
     cursor: pointer;
     user-select: none;
     aspect-ratio: 1 / 1;
     transition: background-color 0.2s;
     background-color: #fff;
+    /* allow absolutely-positioned notes to overflow the cell without resizing */
+    overflow: visible;
 }
 
 
@@ -39,6 +43,9 @@
     /* ...existing code... */
     border: 1px solid #ccc;
     box-sizing: border-box;
+    font-size: clamp(18px, 2.6vw, 30px); /* tweak numbers to taste */
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+
 }
 
 /* Thick 3x3 box borders (override the thin borders where needed) */
@@ -69,41 +76,61 @@
     background-color: #f0f8ff;
 }
 
-/* Corner notes: now implemented as the 3x3 pencilmarks grid inside each cell */
+/* Corner notes: occupy the lower-left 3x3 area of the cell's 4x4 grid */
 .corner-notes {
-    position: absolute;
-    inset: 6px; /* small padding inside the cell */
+    grid-column: 1 / 4; /* columns 1-3 */
+    grid-row: 2 / 5;    /* rows 2-4 */
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
+    gap: 0px 4px; 
+    /* center digits within each corner slot for even spacing */
     align-items: center;
     justify-items: center;
     pointer-events: none;
     z-index: 1;
+    padding: 1px;
 }
 .corner-notes .corner-note {
+    /* make corner notes match center notes size */
     font-size: 0.55em;
+    line-height: 1;
     color: #666;
     visibility: hidden; /* hidden by default, shown when present */
 }
 
 /* Ensure main value sits above corner notes */
 .cell .value {
+    font-family: "Inter", "Noto Sans", sans-serif;
+    font-weight: 350;
+    font-size: 1.6em;
+    color: #1976D2;
     position: relative;
-    z-index: 2;
+    z-index: 3;
+    /* center the main value across the interior 2x2 center of the 4x4 grid */
+    grid-column: 2 / 4;
+    grid-row: 2 / 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Center notes: single-line numbers centered in the middle of the cell */
 .center-notes {
+    /* absolutely position at the top-right so long notes can extend leftwards into cols 3/2/1
+       without affecting layout. Keep right alignment and no wrapping. */
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 0.65em;
-    color: #333;
+    top: 0px;
+    right: 0px;
+    padding: 2px 4px;
+    font-family: "Roboto Condensed", "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 0.55em;
+    color: #f00;
     line-height: 1;
     pointer-events: none;
     opacity: 0.95;
-    text-align: center;
-    z-index: 1;
+    text-align: right;
+    white-space: nowrap;      /* keep on one line and expand leftwards */
+    z-index: 2;
 }

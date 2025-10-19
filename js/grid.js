@@ -83,6 +83,8 @@ function prefillGrid(board) {
         if (val !== "0" && val !== ".") {
             const valueSpan = cell.querySelector('.value');
             if (valueSpan) valueSpan.textContent = val;
+            // update model for prefilled cell
+            if (typeof setGridValue === 'function') setGridValue(row, col, val);
             cell.classList.add("prefilled");
             cell.style.pointerEvents = "none";
         }

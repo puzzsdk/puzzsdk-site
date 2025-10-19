@@ -1,5 +1,20 @@
 // Declare all global variables here
+let lockMode = false;       // false = unlock (edit givens), true = locked (play)
 let gridCells = [];         // 2D array of <td>
+// 9x9 array holding the current main values in each cell (null for empty)
+let gridValues = Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => null));
+
+// Helper to set/get grid values
+function setGridValue(row, col, val) {
+	if (row == null || col == null) return;
+	gridValues[row][col] = val === null ? null : String(val);
+}
+
+function getGridValue(row, col) {
+	if (row == null || col == null) return null;
+	return gridValues[row][col];
+}
+
 let selectedCell = null;    // currently highlighted cell
 let selectedRow = null;
 let selectedCol = null;
